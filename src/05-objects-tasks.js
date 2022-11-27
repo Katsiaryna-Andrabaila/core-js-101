@@ -54,10 +54,7 @@ function getJSON(obj) {
  *
  */
 function fromJSON(proto, json) {
-  function NewObject() {
-    this.prototype = proto;
-  }
-  return new NewObject(JSON.parse(json));
+  return Object.setPrototypeOf(JSON.parse(json), proto);
 }
 
 
@@ -116,32 +113,39 @@ function fromJSON(proto, json) {
  */
 
 const cssSelectorBuilder = {
+  result: '',
+
   element(value) {
-    return value;
+    this.result += `${value}`;
   },
 
   id(value) {
-    return `#${value}.`;
+    this.result += `#${value}.`;
   },
 
   class(value) {
-    return `.${value}`;
+    this.result += `.${value}`;
   },
 
   attr(value) {
-    return `[${value}]`;
+    this.result += `[${value}]`;
   },
 
   pseudoClass(value) {
-    return `:${value}`;
+    this.result += `:${value}`;
   },
 
   pseudoElement(value) {
-    return `::${value}`;
+    this.result += `::${value}`;
   },
 
   combine(selector1, combinator, selector2) {
-    return `${selector1} ${combinator} ${selector2}`;
+    this.result += `${selector1} ${combinator} ${selector2}`;
+  },
+
+  stringify() {
+    console.log(JSON.stringify(this.result));
+    return JSON.stringify(this.result);
   },
 };
 
