@@ -144,7 +144,6 @@ const cssSelectorBuilder = {
   },
 
   stringify() {
-    console.log(JSON.stringify(this.result));
     return JSON.stringify(this.result);
   },
 };
