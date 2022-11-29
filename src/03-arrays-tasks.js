@@ -235,7 +235,11 @@ function toArrayOfSquares(arr) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] => [ 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 ]
  */
 function getMovingSum(arr) {
-  return arr.map((i, el) => el + i, 0);
+  let sum = 0;
+  return arr.map((el) => {
+    sum += el;
+    return sum;
+  });
 }
 /**
  * Returns every second item from the specified array:
@@ -561,8 +565,7 @@ function selectMany(arr, childrenSelector) {
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
 function getElementByIndexes(arr, indexes) {
-  const index = indexes.map((el) => [el]);
-  return arr[index];
+  return indexes.reduce((el) => arr[el]);
 }
 
 
