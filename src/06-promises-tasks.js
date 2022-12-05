@@ -29,19 +29,22 @@
  *                                                    //  Ask her again.';
  */
 function willYouMarryMe(isPositiveAnswer) {
-  return new Promise((resolve, reject) => {
-    if (isPositiveAnswer) {
-      resolve('Hooray!!! She said "Yes"!');
-    }
-    if (!isPositiveAnswer) {
-      resolve('Oh no, she said "No".');
-    }
-    if (typeof isPositiveAnswer !== 'boolean') {
-      reject(new Error('Wrong parameter is passed! Ask her again.'));
-    }
-  });
+  const yes = 'Hooray!!! She said "Yes"!';
+  const no = 'Oh no, she said "No".';
+  const err = 'Wrong parameter is passed! Ask her again.';
+  if (isPositiveAnswer === true) {
+    return Promise.resolve(yes).then((value) => value);
+  }
+  if (isPositiveAnswer === false) {
+    return Promise.resolve(no).then((value) => value);
+  }
+  if (typeof isPositiveAnswer !== 'boolean') {
+    return Promise.reject(new Error(err)).then(() => null, (error) => {
+      throw error;
+    });
+  }
+  return Promise.reject(new Error(err)).then(() => null, (error) => error);
 }
-
 
 /**
  * Return Promise object that should be resolved with array containing plain values.
@@ -58,8 +61,8 @@ function willYouMarryMe(isPositiveAnswer) {
  *    })
  *
  */
-function processAllPromises(/* array */) {
-  throw new Error('Not implemented');
+function processAllPromises(array) {
+  return Promise.all(array).then((items) => items);
 }
 
 /**
@@ -81,8 +84,8 @@ function processAllPromises(/* array */) {
  *    })
  *
  */
-function getFastestPromise(/* array */) {
-  throw new Error('Not implemented');
+function getFastestPromise(array) {
+  return Promise.race(array).then((item) => item);
 }
 
 /**
