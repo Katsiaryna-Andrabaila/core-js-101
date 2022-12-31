@@ -107,8 +107,11 @@ function getPolynom(...args) {
  *   ...
  *   memoizer() => the same random number  (next run, returns the previous cached result)
  */
-function memoize(/* func */) {
-  throw new Error('Not implemented');
+function memoize(func) {
+  const result = func();
+  return function myFunc() {
+    return result;
+  };
 }
 
 
@@ -155,8 +158,10 @@ function retry(/* func, attempts */) {
  * cos(3.141592653589793) ends
  *
  */
-function logger(/* func, logFunc */) {
-  throw new Error('Not implemented');
+function logger(func, logFunc) {
+  return function myFunc() {
+    return `${logFunc(func)} starts`;
+  };
 }
 
 
@@ -173,10 +178,7 @@ function logger(/* func, logFunc */) {
  *   partialUsingArguments(fn, 'a','b','c')('d') => 'abcd'
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
-function partialUsingArguments(/* fn, ...args1 */) {
-  throw new Error('Not implemented');
-}
-
+const partialUsingArguments = (fn, ...args1) => (...args2) => fn(...args1, ...args2);
 
 /**
  * Returns the id generator function that returns next integer starting
